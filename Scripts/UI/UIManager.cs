@@ -22,8 +22,9 @@ public class UIManager : MonoBehaviour
     {
         Instance = this;
         originalSize = hpMaskImage.rectTransform.rect.width;
-        SetHPValue(1); 
+        SetHPValue(1);
     }
+
     /// <summary>
     /// 血条UI填充显示
     /// </summary>
@@ -31,8 +32,9 @@ public class UIManager : MonoBehaviour
     public void SetHPValue(float fillPercent)
     {
         hpMaskImage.rectTransform.SetSizeWithCurrentAnchors(
-            RectTransform.Axis.Horizontal,fillPercent*originalSize);
+            RectTransform.Axis.Horizontal, fillPercent * originalSize);
     }
+
     /// <summary>
     /// 蓝条UI填充显示
     /// </summary>
@@ -47,6 +49,7 @@ public class UIManager : MonoBehaviour
     {
         battlePanelGo.SetActive(show);
     }
+
     /// <summary>
     /// 显示对话内容（包含人物的切换，名字的更换，对话内容的更换）
     /// </summary>
@@ -54,7 +57,7 @@ public class UIManager : MonoBehaviour
     /// <param name="name"></param>
     public void ShowDialog(string content = null, string name = null)
     {
-        //关闭
+        // 关闭
         if (content == null)
         {
             TalkPanelGo.SetActive(false);
