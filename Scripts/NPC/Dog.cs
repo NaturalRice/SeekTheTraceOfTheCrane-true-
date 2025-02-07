@@ -28,8 +28,6 @@ public class Dog : MonoBehaviour
         animator.CrossFade("Comforted", 0);
         // 更新游戏管理器中的状态，表示已经宠物过狗了
         GameManager.Instance.hasPetTheDog = true;
-        // 设置内容索引，可能是为了更新游戏内容或进度
-        GameManager.Instance.SetContentIndex();
         // 销毁星星效果对象
         Destroy(starEffect);
         // 播放宠物狗的音效

@@ -1,166 +1,144 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
+using Random = UnityEngine.Random;
+using OpenAI;
+using OpenAI.Chat;
+
 //*****************************************
 //创建人： Trigger 
 //功能说明：NPC談話
 //***************************************** 
 public class NPCDialog : MonoBehaviour
 {
-    // 存储所有对话信息的列表
-    private List<DialogInfo[]> dialogInfoList;
-    // 当前对话内容的索引
-    public int contentIndex;
     // 用于控制动画的Animator组件
     public Animator animator;
+    
+    // UI元素
+    [SerializeField] private DiscussionBubble bubblePrefab;
+    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private Transform bubblesParent;
 
-    // Start is called before the first frame update
+    // 事件
+    public static Action onMessageReceived;
+
+    // 认证信息
+    [SerializeField] private string[] apiKey;
+    private OpenAIClient api;
+
+    // 设置
+    [SerializeField]
+    private List<Message> chatPrompts = new List<Message>();
+
+    // NPC属性
+    [Header("NPC Settings")]
+    [SerializeField] private string npcName = "NPC";
+    [SerializeField] private string npcRole = "Generic Role";
+    [SerializeField] private string npcTask = "Generic Task";
+    [SerializeField] private string npcBackground = "Generic Background";
+    [SerializeField] private string npcPersonality = "Generic Personality";
+
+    // 在第一次帧更新之前调用
     void Start()
     {
-        // 初始化dialogInfoList，并填充对话信息
-        dialogInfoList = new List<DialogInfo[]>()
-        {
-            // 各种不同的对话场景，每个场景由一系列对话信息组成
-            new DialogInfo[]{
-                new DialogInfo() {name="Player",content="(,,･∀･)ﾉ゛hello，我是LuNa，你可以用上下左右控制我移动，空格键与NPC进行对话，战斗中需要简单点击按钮执行相应行为" }
-            },
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="好久不见了，小猫咪(*ΦωΦ*)，Luna~" },
-                new DialogInfo() {name="Player",content="好久不见，Nala,你还是那么有活力，哈哈" },
-                new DialogInfo() {name="程慕清",content="还好吧~" },
-                new DialogInfo() {name="程慕清",content="我的狗一直在叫，但是我这会忙不过来，你能帮我安抚一下它吗？" },
-                new DialogInfo() {name="Player",content="啊？" },
-                new DialogInfo() {name="程慕清",content="(,,´•ω•)ノ(´っω•｀。)摸摸他就行，摸摸说呦西呦西，真是个好孩子呐" },
-                new DialogInfo() {name="程慕清",content="别看他叫的这么凶，其实他就是想引起别人的注意" },
-                new DialogInfo() {name="Player",content="可是。。。。" },
-                new DialogInfo() {name="Player",content="我是猫女郎啊" },
-                new DialogInfo() {name="程慕清",content="安心啦，不会咬你哒，去吧去吧~" },
-            },
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="他还在叫呢" }
-            },
-            //3
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="感谢你呐，Luna，你还是那么可靠！" },
-                new DialogInfo() {name="程慕清",content="我想请你帮个忙好吗" },
-                new DialogInfo() {name="程慕清",content="说起来这事怪我。。。" },
-                new DialogInfo() {name="程慕清",content="今天我睡过头了，出门比较匆忙" },
-                new DialogInfo() {name="程慕清",content="然后装蜡烛的袋子口子没封好!o(╥﹏╥)o" },
-                new DialogInfo() {name="程慕清",content="结果就。。。蜡烛基本丢完了" },
-                new DialogInfo() {name="Player",content="你还是老样子，哈哈。。" },
-                new DialogInfo() {name="程慕清",content="所以，所以喽，你帮帮忙，帮我把蜡烛找回来" },
-                new DialogInfo() {name="程慕清",content="如果你能帮我找回全部的5根蜡烛，我就送你一把神器" },
-                new DialogInfo() {name="Player",content="神器？(¯﹃¯)" },
-                new DialogInfo() {name="程慕清",content="是的，我感觉很适合你，加油呐~" },
-            },
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="你还没帮我收集到所有的蜡烛，宝~" },
-            },
-            //5
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="可靠啊！竟然一个不差的全收集回来了" },
-                new DialogInfo() {name="Player",content="你知道多累吗？" },
-                new DialogInfo() {name="Player",content="你到处跑，真的很难收集" },
-                new DialogInfo() {name="程慕清",content="辛苦啦辛苦啦" },
-                new DialogInfo() {name="程慕清",content="这是给你的奖励" },
-                new DialogInfo() {name="程慕清",content="蓝纹火锤，传说中的神器" },
-                new DialogInfo() {name="程慕清",content="应该挺适合你的" },
-                new DialogInfo() {name="Player",content="~~获得蓝纹火锤~~（遇到怪物可触发战斗）" },
-                new DialogInfo() {name="Player",content="哇，谢谢你！Thanks♪(･ω･)ﾉ" },
-                new DialogInfo() {name="程慕清",content="嘿嘿(*^▽^*)，咱们的关系不用客气" },
-                new DialogInfo() {name="程慕清",content="正好，最近山里出现了一堆怪物，你也算为民除害，帮忙清理5只怪物" },
-                new DialogInfo() {name="Player",content="啊？" },
-                new DialogInfo() {name="Player",content="这才是你的真实目的吧？！" },
-                new DialogInfo() {name="程慕清",content="拜托拜托啦，否则真的很不方便我卖东西" },
-                new DialogInfo() {name="Player",content="无语中。。。" },
-                new DialogInfo() {name="程慕清",content="求求你了，啵啵~" },
-                new DialogInfo() {name="Player",content="哎，行吧，谁让你大呢~" },
-                new DialogInfo() {name="程慕清",content="嘻嘻，那辛苦宝子啦" }
-            },
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="宝，你还没清理干净呢,这样我不方便嘛~" },
-            },
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="真棒，luna，周围的居民都会十分感谢你的，有机会来我家喝一杯吧~" },
-                new DialogInfo() {name="Player",content="我觉得可行，哈哈~" }
-            },
-            new DialogInfo[]{
-                new DialogInfo() {name="程慕清",content="改天再见喽~" },
-            }
-        };
-        // 初始化对话信息索引和内容索引
-        GameManager.Instance.dialogInfoIndex = 0;
-        contentIndex = 1;
+        // 创建初始消息气泡
+        CreateBubble("你好！很高兴认识你！", false);
+
+        // 进行认证
+        Authenticate();
+
+        // 初始化设置
+        Initialize();
+
     }
+    
+    /// <summary>
+    /// 认证OpenAI API密钥。
+    /// </summary>
+    private void Authenticate()
+    {
+        api = new OpenAIClient(new OpenAIAuthentication(apiKey[0]));
+    }
+
+    /// <summary>
+    /// 初始化聊天提示。
+    /// </summary>
+    private void Initialize()
+    {
+        Message prompt = new Message(OpenAI.Role.System, $"你是一个名为{npcName}的{npcRole}，你的主要任务是{npcTask}。你的背景是{npcBackground}，性格特点是{npcPersonality}。");
+        chatPrompts.Add(prompt);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // 检查玩家是否按下了Esc键
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // 关闭对话面板
+            UIManager.Instance.ShowDialog();
+            // 允许玩家继续控制角色
+            GameManager.Instance.canControlLuna = true;
+        }
+    }
+    
+    /// <summary>
+    /// 处理用户提问按钮点击事件。
+    /// </summary>
+    public async void AskButtonCallback()
+    {
+        // 创建用户消息气泡
+        CreateBubble(inputField.text, true);
+
+        Message prompt = new Message(OpenAI.Role.User, inputField.text);
+        chatPrompts.Add(prompt);
+
+        inputField.text = "";
+
+        ChatRequest request = new ChatRequest(
+            messages: chatPrompts,
+            model: OpenAI.Models.Model.GPT3_5_Turbo,
+            temperature: 0.2);
+
+        try
+        {
+            var result = await api.ChatEndpoint.GetCompletionAsync(request);
+
+            Message chatResult = new Message(OpenAI.Role.Assistant, result.FirstChoice.ToString());
+            chatPrompts.Add(chatResult);
+
+            // 创建回复消息气泡
+            CreateBubble(result.FirstChoice.ToString(), false);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+    
+    /// <summary>
+    /// 创建消息气泡。
+    /// </summary>
+    /// <param name="message">要显示的消息文本。</param>
+    /// <param name="isUserMessage">是否为用户消息。</param>
+    public void CreateBubble(string message, bool isUserMessage)
+    {
+        DiscussionBubble discussionBubble = Instantiate(bubblePrefab, bubblesParent);
+        discussionBubble.Configure(message, isUserMessage);
+
+        onMessageReceived?.Invoke();
+    }
+    
     /// <summary>
     /// 显示对话内容
     /// </summary>
     public void DisplayDialog()
     {
-        // 如果对话信息索引大于7，则不执行任何操作
-        if (GameManager.Instance.dialogInfoIndex > 7)
-        {
-            return;
-        }
-        // 如果当前对话内容索引超出范围
-        if (contentIndex >= dialogInfoList[GameManager.Instance.dialogInfoIndex].Length)
-        {
-            // 根据特定条件检查任务完成情况
-            if (GameManager.Instance.dialogInfoIndex == 2 &&
-                !GameManager.Instance.hasPetTheDog)
-            {
-
-            }
-            else if (GameManager.Instance.dialogInfoIndex == 4 &&
-                GameManager.Instance.candleNum < 5)
-            {
-
-            }
-            else if (GameManager.Instance.dialogInfoIndex == 6 &&
-                GameManager.Instance.killNum < 5)
-            {
-
-            }
-            else
-            {
-                // 更新对话信息索引
-                GameManager.Instance.dialogInfoIndex++;
-            }
-            // 显示怪物
-            if (GameManager.Instance.dialogInfoIndex == 6)
-            {
-                GameManager.Instance.ShowMonsters();
-            }
-
-            // 当前这段对话结束了，可以开始控制luna
-            contentIndex = 0;
-            UIManager.Instance.ShowDialog();
-            GameManager.Instance.canControlLuna = true;
-        }
-        else
-        {
-            // 获取并显示当前对话信息
-            DialogInfo dialogInfo = dialogInfoList[GameManager.Instance.dialogInfoIndex][contentIndex];
-            UIManager.Instance.ShowDialog(dialogInfo.content, dialogInfo.name);
-            contentIndex++;
-            animator.SetTrigger("Talk");
-        }
+        // 获取并显示当前对话信息
+        string dialogInfo = ""; // 这里假设所有对话都是由AI生成
+        UIManager.Instance.ShowDialog(dialogInfo, npcName);
+        animator.SetTrigger("Talk");
     }
-
-    /// <summary>
-    /// 任务完成设置索引
-    /// </summary>
-    public void SetContentIndex()
-    {
-        // 设置当前对话内容索引为当前对话信息数组的长度
-        contentIndex = dialogInfoList[GameManager.Instance.dialogInfoIndex].Length;
-    }
-}
-/// <summary>
-/// 类外的结构体 对话信息
-/// </summary>
-public struct DialogInfo
-{
-    public string name;
-    public string content;
 }

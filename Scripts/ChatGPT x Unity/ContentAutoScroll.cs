@@ -17,7 +17,7 @@ public class ContentAutoScroll : MonoBehaviour
         rt = GetComponent<RectTransform>();
 
         // 订阅 DiscussionManager 的 onMessageReceived 事件，在收到新消息时触发 DelayScrollDown 方法。
-        DiscussionManager.onMessageReceived += DelayScrollDown;
+        NPCDialog.onMessageReceived += DelayScrollDown;
     }
 
     // OnDestroy 方法在对象即将被销毁时调用。
@@ -25,7 +25,7 @@ public class ContentAutoScroll : MonoBehaviour
     private void OnDestroy()
     {
         // 取消订阅 DiscussionManager 的 onMessageReceived 事件，防止内存泄漏。
-        DiscussionManager.onMessageReceived -= DelayScrollDown;
+        NPCDialog.onMessageReceived -= DelayScrollDown;
     }
 
     // Update 方法每帧调用一次。

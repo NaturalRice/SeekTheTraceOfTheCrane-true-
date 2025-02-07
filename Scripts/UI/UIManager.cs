@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject TalkPanelGo;
     public Image characterImage;
-    public Sprite[] characterSprtes;
+    public Sprite[] characterSprites; // 修改: 修正拼写错误
     public Text nameText;
     public Text contentText;
 
@@ -69,15 +69,23 @@ public class UIManager : MonoBehaviour
             {
                 if (name == "Player")
                 {
-                    characterImage.sprite = characterSprtes[0];
+                    characterImage.sprite = characterSprites[0];
                 }
+                else if (name == "程慕清")
+                {
+                    characterImage.sprite = characterSprites[1];
+                }
+                else if (name == "Dog")
+                {
+                    // 假设Dog的图片是第三个
+                }
+                // 可以继续添加其他NPC的图片
                 else
                 {
-                    characterImage.sprite = characterSprtes[1];
+                    // 默认图片
                 }
                 characterImage.SetNativeSize();
             }
-            contentText.text = content;
             nameText.text = name;
         }
     }

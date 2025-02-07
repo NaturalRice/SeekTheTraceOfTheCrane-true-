@@ -26,11 +26,6 @@ public class Candle : MonoBehaviour
         GameManager.Instance.candleNum++;
         // 在蜡烛位置实例化效果GameObjec
         Instantiate(effectGo, transform.position, Quaternion.identity);
-        // 如果收集的蜡烛数量达到或超过5个，调用游戏管理器的SetContentIndex方法
-        if (GameManager.Instance.candleNum >= 5)
-        {
-            GameManager.Instance.SetContentIndex();
-        }
         // 播放蜡烛被捡起的音效
         GameManager.Instance.PlaySound(pickClip);
         // 销毁碰撞的GameObjec（已注释掉）

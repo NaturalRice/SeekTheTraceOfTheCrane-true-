@@ -157,13 +157,7 @@ public class GameManager : MonoBehaviour
             monstersGo.SetActive(true);
         }
     }
-    /// <summary>
-    /// 任务完成设置索引
-    /// </summary>
-    public void SetContentIndex()
-    {
-        npc.SetContentIndex();
-    }
+
 
     public void PlayMusic(AudioClip audioClip)
     {
