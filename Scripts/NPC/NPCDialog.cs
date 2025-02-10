@@ -44,7 +44,7 @@ public class NPCDialog : MonoBehaviour
     void Start()
     {
         // 创建初始消息气泡（该行用于测试）
-        CreateBubble($"你好！我叫{npcName}，是{npcRole}", false);
+        //CreateBubble($"你好！我叫{npcName}，是{npcRole}", false);
 
         // 进行认证
         Authenticate();
@@ -53,7 +53,7 @@ public class NPCDialog : MonoBehaviour
         Initialize();
 
         // 确保npcName在Start方法中被正确初始化
-        Debug.Log("NPC Name in Start: " + npcName);
+        //Debug.Log("NPC Name in Start: " + npcName);
     }
 
     /// <summary>

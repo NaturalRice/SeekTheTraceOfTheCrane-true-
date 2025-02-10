@@ -44,6 +44,7 @@ public class SceneExporter : MonoBehaviour
                     if (component != null)
                     {
                         writer.WriteLine($"  - {component.GetType().Name}");
+                        WriteComponentProperties(writer, component);
                     }
                 }
 
@@ -59,6 +60,7 @@ public class SceneExporter : MonoBehaviour
                         if (component != null)
                         {
                             writer.WriteLine($"    - {component.GetType().Name}");
+                            WriteComponentProperties(writer, component);
                         }
                     }
                 }
@@ -69,4 +71,79 @@ public class SceneExporter : MonoBehaviour
 
         Debug.Log($"场景信息已导出到 {filePath}");
     }
+
+    private void WriteComponentProperties(StreamWriter writer, Component component)
+    {
+        // 获取组件的所有序列化字段
+        System.Reflection.FieldInfo[] fields = component.GetType().GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly);
+        foreach (System.Reflection.FieldInfo field in fields)
+        {
+            if (field.IsPublic && field.IsDefined(typeof(SerializeField), false))
+            {
+                object value = field.GetValue(component);
+                if (value != null)
+                {
+                    if (value is GameObject go)
+                    {
+                        writer.WriteLine($"      - {field.Name}: {go.name} (Type: {go.GetType().Name})");
+                    }
+                    else if (value is Component comp)
+                    {
+                        writer.WriteLine($"      - {field.Name}: {comp.gameObject.name} (Type: {comp.GetType().Name})");
+                    }
+                    else if (value is UnityEngine.Object obj)
+                    {
+                        writer.WriteLine($"      - {field.Name}: {obj.GetType().Name}");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"      - {field.Name}: {value}");
+                    }
+                }
+                else
+                {
+                    writer.WriteLine($"      - {field.Name}: null");
+                }
+            }
+        }
+
+
+        // 获取组件的所有序列化属性
+        System.Reflection.PropertyInfo[] properties = component.GetType().GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly);
+        foreach (System.Reflection.PropertyInfo property in properties)
+        {
+            if (property.CanRead && property.GetGetMethod() != null && property.GetGetMethod().IsPublic && property.IsDefined(typeof(SerializeField), false))
+            {
+                object value = property.GetValue(component);
+                if (value != null)
+                {
+                    if (value is GameObject go)
+                    {
+                        writer.WriteLine($"      - {property.Name}: {go.name} (Type: {go.GetType().Name})");
+                    }
+                    else if (value is Component comp)
+                    {
+                        writer.WriteLine($"      - {property.Name}: {comp.gameObject.name} (Type: {comp.GetType().Name})");
+                    }
+                    else if (value is UnityEngine.Object obj)
+                    {
+                        writer.WriteLine($"      - {property.Name}: {obj.GetType().Name}");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"      - {property.Name}: {value}");
+                    }
+                }
+                else
+                {
+                    writer.WriteLine($"      - {property.Name}: null");
+                }
+            }
+        }
+
+
+
+    }
+    
 }
+
