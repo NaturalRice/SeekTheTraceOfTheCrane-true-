@@ -43,8 +43,8 @@ public class NPCDialog : MonoBehaviour
     // 在第一次帧更新之前调用
     void Start()
     {
-        // 创建初始消息气泡
-        CreateBubble("你好！很高兴认识你！", false);
+        // 创建初始消息气泡（该行用于测试）
+        CreateBubble($"你好！我叫{npcName}，是{npcRole}", false);
 
         // 进行认证
         Authenticate();

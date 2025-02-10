@@ -142,11 +142,39 @@ public class Player : MonoBehaviour
                 npcDialog.npcName = "程慕清"; // 设置npcName
                 npcDialog.DisplayDialog();
             }
+            else if (collider.name == "参观者1")
+            {
+                GameManager.Instance.canControlLuna = false;
+                NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
+                npcDialog.npcName = "参观者1"; // 设置npcName
+                npcDialog.DisplayDialog();
+            }
             else if (collider.name == "参观者2")
             {
                 GameManager.Instance.canControlLuna = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "参观者2"; // 设置npcName
+                npcDialog.DisplayDialog();
+            }
+            else if (collider.name == "参观者3")
+            {
+                GameManager.Instance.canControlLuna = false;
+                NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
+                npcDialog.npcName = "参观者3"; // 设置npcName
+                npcDialog.DisplayDialog();
+            }
+            else if (collider.name == "参观者4")
+            {
+                GameManager.Instance.canControlLuna = false;
+                NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
+                npcDialog.npcName = "参观者4"; // 设置npcName
+                npcDialog.DisplayDialog();
+            }
+            else if (collider.name == "程老")
+            {
+                GameManager.Instance.canControlLuna = false;
+                NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
+                npcDialog.npcName = "程老"; // 设置npcName
                 npcDialog.DisplayDialog();
             }
             else if (collider.name == "Dog" 

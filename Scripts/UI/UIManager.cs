@@ -14,6 +14,10 @@ public class UIManager : MonoBehaviour
     
     public GameObject TalkPanelGo1;
     public GameObject TalkPanelGo2;
+    public GameObject TalkPanelGo3;
+    public GameObject TalkPanelGo4;
+    public GameObject TalkPanelGo5;
+    public GameObject TalkPanelGo6;
     
     public Sprite[] characterSprites; // 修改: 修正拼写错误
     public Text nameText;
@@ -59,6 +63,10 @@ public class UIManager : MonoBehaviour
             // 关闭对话面板
             TalkPanelGo1.SetActive(false);
             TalkPanelGo2.SetActive(false);
+            TalkPanelGo3.SetActive(false);
+            TalkPanelGo4.SetActive(false);
+            TalkPanelGo5.SetActive(false);
+            TalkPanelGo6.SetActive(false);
             // 允许玩家继续控制角色
             GameManager.Instance.canControlLuna = true;
         }
@@ -72,7 +80,15 @@ public class UIManager : MonoBehaviour
     {
         if(name == "程慕清")
             TalkPanelGo1.SetActive(true);
-        else if(name == "参观者2")
+        else if(name == "参观者1")
             TalkPanelGo2.SetActive(true);
+        else if(name == "参观者2")
+            TalkPanelGo3.SetActive(true);
+        else if(name == "参观者3")
+            TalkPanelGo4.SetActive(true);
+        else if(name == "参观者4")
+            TalkPanelGo5.SetActive(true);
+        else if(name == "程老")
+            TalkPanelGo6.SetActive(true);
     }
 }
