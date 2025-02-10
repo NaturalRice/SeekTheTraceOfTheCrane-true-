@@ -131,13 +131,23 @@ public class Player : MonoBehaviour
         // 检测角色周围是否有NPC
         Collider2D collider = Physics2D.OverlapCircle(rigidbody2d.position, 
             0.5f, LayerMask.GetMask("NPC"));
+        
         if (collider != null)
         {
             // 根据NPC的不同反应进行不同处理
             if (collider.name == "程慕清")
             {
                 GameManager.Instance.canControlLuna = false;
-                collider.GetComponent<NPCDialog>().DisplayDialog();
+                NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
+                npcDialog.npcName = "程慕清"; // 设置npcName
+                npcDialog.DisplayDialog();
+            }
+            else if (collider.name == "参观者2")
+            {
+                GameManager.Instance.canControlLuna = false;
+                NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
+                npcDialog.npcName = "参观者2"; // 设置npcName
+                npcDialog.DisplayDialog();
             }
             else if (collider.name == "Dog" 
                      && !GameManager.Instance.hasPetTheDog &&

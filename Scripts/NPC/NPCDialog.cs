@@ -34,7 +34,7 @@ public class NPCDialog : MonoBehaviour
 
     // NPC属性
     [Header("NPC Settings")]
-    [SerializeField] private string npcName = "NPC";
+    [SerializeField] public string npcName = "NPC";
     [SerializeField] private string npcRole = "Generic Role";
     [SerializeField] private string npcTask = "Generic Task";
     [SerializeField] private string npcBackground = "Generic Background";
@@ -52,8 +52,10 @@ public class NPCDialog : MonoBehaviour
         // 初始化设置
         Initialize();
 
+        // 确保npcName在Start方法中被正确初始化
+        Debug.Log("NPC Name in Start: " + npcName);
     }
-    
+
     /// <summary>
     /// 认证OpenAI API密钥。
     /// </summary>
@@ -69,19 +71,6 @@ public class NPCDialog : MonoBehaviour
     {
         Message prompt = new Message(OpenAI.Role.System, $"你是一个名为{npcName}的{npcRole}，你的主要任务是{npcTask}。你的背景是{npcBackground}，性格特点是{npcPersonality}。");
         chatPrompts.Add(prompt);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // 检查玩家是否按下了Esc键
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            // 关闭对话面板
-            UIManager.Instance.ShowDialog();
-            // 允许玩家继续控制角色
-            GameManager.Instance.canControlLuna = true;
-        }
     }
     
     /// <summary>
@@ -136,9 +125,9 @@ public class NPCDialog : MonoBehaviour
     /// </summary>
     public void DisplayDialog()
     {
-        // 获取并显示当前对话信息
-        string dialogInfo = ""; // 这里假设所有对话都是由AI生成
-        UIManager.Instance.ShowDialog(dialogInfo, npcName);
+        // 确保npcName在DisplayDialog方法调用时已经被正确赋值
+        Debug.Log("NPC Name in DisplayDialog: " + npcName);
+        UIManager.Instance.ShowDialog(npcName);
         animator.SetTrigger("Talk");
     }
 }

@@ -9,11 +9,12 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public Image hpMaskImage;
     public Image mpMaskImage;
-    private float originalSize;//血条原始宽度
+    private float originalSize; // 血条原始宽度
     public GameObject battlePanelGo;
-
-    public GameObject TalkPanelGo;
-    public Image characterImage;
+    
+    public GameObject TalkPanelGo1;
+    public GameObject TalkPanelGo2;
+    
     public Sprite[] characterSprites; // 修改: 修正拼写错误
     public Text nameText;
     public Text contentText;
@@ -49,44 +50,29 @@ public class UIManager : MonoBehaviour
     {
         battlePanelGo.SetActive(show);
     }
+    
+    void Update()
+    {
+        // 检查玩家是否按下了Esc键
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // 关闭对话面板
+            TalkPanelGo1.SetActive(false);
+            TalkPanelGo2.SetActive(false);
+            // 允许玩家继续控制角色
+            GameManager.Instance.canControlLuna = true;
+        }
+    }
 
     /// <summary>
     /// 显示对话内容（包含人物的切换，名字的更换，对话内容的更换）
     /// </summary>
-    /// <param name="content"></param>
     /// <param name="name"></param>
-    public void ShowDialog(string content = null, string name = null)
+    public void ShowDialog(string name)
     {
-        // 关闭
-        if (content == null)
-        {
-            TalkPanelGo.SetActive(false);
-        }
-        else
-        {
-            TalkPanelGo.SetActive(true);
-            if (name != null)
-            {
-                if (name == "Player")
-                {
-                    characterImage.sprite = characterSprites[0];
-                }
-                else if (name == "程慕清")
-                {
-                    characterImage.sprite = characterSprites[1];
-                }
-                else if (name == "Dog")
-                {
-                    // 假设Dog的图片是第三个
-                }
-                // 可以继续添加其他NPC的图片
-                else
-                {
-                    // 默认图片
-                }
-                characterImage.SetNativeSize();
-            }
-            nameText.text = name;
-        }
+        if(name == "程慕清")
+            TalkPanelGo1.SetActive(true);
+        else if(name == "参观者2")
+            TalkPanelGo2.SetActive(true);
     }
 }
