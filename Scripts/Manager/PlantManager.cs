@@ -74,10 +74,14 @@ public class PlantManager : MonoBehaviour
         TileBase tile = interactableMap.GetTile(tilePosition);
 
         // 如果当前位置有瓦片且为交互瓦片，则将其设置为耕过的地面瓦片
-        if(tile!=null && tile.name== interactableTile.name)
+        if (tile != null && tile.name == interactableTile.name)
         {
             interactableMap.SetTile(tilePosition, groundHoedTile);
+            //Debug.Log($"HoeGround called at position: {position}. Tile changed to {groundHoedTile.name}.");
+        }
+        else
+        {
+            //Debug.Log($"HoeGround called at position: {position}. No valid tile to hoe.");
         }
     }
-
 }

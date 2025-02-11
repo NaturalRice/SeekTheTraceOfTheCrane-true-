@@ -12,16 +12,13 @@ public class UIManager : MonoBehaviour
     private float originalSize; // 血条原始宽度
     public GameObject battlePanelGo;
     
-    public GameObject TalkPanelGo1;
-    public GameObject TalkPanelGo2;
-    public GameObject TalkPanelGo3;
-    public GameObject TalkPanelGo4;
-    public GameObject TalkPanelGo5;
-    public GameObject TalkPanelGo6;
-    
-    public Sprite[] characterSprites; // 修改: 修正拼写错误
-    public Text nameText;
-    public Text contentText;
+    public GameObject TalkPanelGo0;//玩家
+    public GameObject TalkPanelGo1;//程慕清
+    public GameObject TalkPanelGo2;//参观者1
+    public GameObject TalkPanelGo3;//参观者2
+    public GameObject TalkPanelGo4;//参观者3
+    public GameObject TalkPanelGo5;//参观者4
+    public GameObject TalkPanelGo6;//程老
 
     void Awake()
     {
@@ -59,6 +56,10 @@ public class UIManager : MonoBehaviour
     {
         // 检查玩家是否按下了Esc键
         if (Input.GetKeyDown(KeyCode.Tab))
+            if(GameManager.Instance.canControlLuna)
+                TalkPanelGo0.SetActive(!TalkPanelGo0.activeSelf);//玩家面板可随时打开关闭
+
+        if (Input.GetMouseButtonDown(1))
         {
             // 关闭对话面板
             TalkPanelGo1.SetActive(false);

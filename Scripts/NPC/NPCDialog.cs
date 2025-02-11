@@ -46,6 +46,18 @@ public class NPCDialog : MonoBehaviour
         // 创建初始消息气泡（该行用于测试）
         //CreateBubble($"你好！我叫{npcName}，是{npcRole}", false);
 
+        if (npcName == "欧阳晴晴") //给玩家介绍游戏操作方法
+        {
+            CreateBubble($"程慕清短信通知我赶紧来博物馆，说有事需要我帮忙，不知道是什么事情？" +
+                         $"先进博物馆看看再说。", false);
+            CreateBubble($"提示：按WSAD上下左右移动，Esc键打开关闭背包，在NPC面前按空格键与其对话，" +
+                         $"按鼠标右键退出对话；" +
+                         $"而此面板代表的是你的想法，你心里的小九九，如果你的什么不懂的可以打字在这里，" +
+                         $"或者你有什么碎碎念的话，这里也是不错的情绪垃圾桶，说不定有意外之喜。最后，" +
+                         $"按Tab键打开关闭本面板。", false);
+            CreateBubble($"我知道你现在动不了，别急，按一下鼠标右键就可以动了", false);
+        }
+        
         // 进行认证
         Authenticate();
 
@@ -126,7 +138,7 @@ public class NPCDialog : MonoBehaviour
     public void DisplayDialog()
     {
         // 确保npcName在DisplayDialog方法调用时已经被正确赋值
-        Debug.Log("NPC Name in DisplayDialog: " + npcName);
+        //Debug.Log("NPC Name in DisplayDialog: " + npcName);
         UIManager.Instance.ShowDialog(npcName);
         animator.SetTrigger("Talk");
     }

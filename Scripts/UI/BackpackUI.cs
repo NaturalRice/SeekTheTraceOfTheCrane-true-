@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 背包用户界面类，负责管理和显示背包中的物品
+/// 背包UI管理类，负责背包界面的显示和交互逻辑
 /// </summary>
 public class BackpackUI : MonoBehaviour
 {
     /// <summary>
-    /// 存储背包UI的父对象
+    /// 背包界面的父级UI对象
     /// </summary>
     private GameObject parentUI;
 
     /// <summary>
-    /// 背包中所有槽的UI列表
+    /// 存储所有槽位UI组件的列表
     /// </summary>
     public List<SlotUI> slotuiList;
 
     /// <summary>
-    /// 初始化Awake方法，在脚本实例化时调用
+    /// 在Awake阶段初始化背包UI管理器
     /// </summary>
     private void Awake()
     {
-        // 查找并缓存背包UI的父对象
+        // 查找并缓存当前GameObject下的ParentUI对象
         parentUI = transform.Find("ParentUI").gameObject;
     }
 
     /// <summary>
-    /// 初始化Start方法，在脚本启用时调用
+    /// 在Start阶段初始化背包UI
     /// </summary>
     private void Start()
     {
@@ -36,11 +36,11 @@ public class BackpackUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 每帧调用的Update方法
+    /// 每帧调用一次，处理输入和更新逻辑
     /// </summary>
     void Update()
     {
-        // 当按下Esc键时，切换UI的显示状态
+        // 如果按下Esc键，则切换背包界面的显示状态
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleUI();
@@ -48,16 +48,16 @@ public class BackpackUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 初始化UI方法，包括槽的初始化和数据绑定
+    /// 初始化背包UI，包括初始化槽位列表和更新UI显示
     /// </summary>
     void InitUI()
     {
-        // 初始化槽UI列表，大小为24
+        // 初始化slotuiList，长度为24
         slotuiList = new List<SlotUI>(new SlotUI[24]);  
-        // 获取所有子对象中的SlotUI组件
+        // 获取当前GameObject下所有的SlotUI组件
         SlotUI[] slotuiArray = transform.GetComponentsInChildren<SlotUI>();
 
-        // 遍历所有找到的SlotUI组件，并将其添加到列表中
+        // 遍历所有找到的SlotUI组件，并将其添加到slotuiList中
         foreach(SlotUI slotUI in slotuiArray)
         {
             slotuiList[slotUI.index] = slotUI;
@@ -68,14 +68,14 @@ public class BackpackUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新UI方法，根据背包数据更新UI显示
+    /// 根据InventoryManager中的数据更新背包UI显示
     /// </summary>
     public void UpdateUI()
     {
-        // 获取背包中的所有槽数据
+        // 从InventoryManager中获取背包槽位数据列表
         List<SlotData> slotdataList = InventoryManager.Instance.backpack.slotList;
         
-        // 遍历所有槽数据，并更新对应的UI显示
+        // 遍历槽位数据列表，更新对应的槽位UI组件
         for(int i = 0; i < slotdataList.Count; i++)
         {
             slotuiList[i].SetData(slotdataList[i]);
@@ -83,20 +83,20 @@ public class BackpackUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 切换UI显示状态的方法
+    /// 切换背包界面的显示状态
     /// </summary>
     private void ToggleUI()
     {
-        // 设置父UI对象的激活状态为其当前状态的相反值
+        // 设置parentUI对象的激活状态为其当前状态的反值
         parentUI.SetActive(!parentUI.activeSelf);
     }
 
     /// <summary>
-    /// 当点击关闭按钮时调用的方法
+    /// 当关闭按钮被点击时调用此方法，切换背包界面的显示状态
     /// </summary>
     public void OnCloseClick()
     {
-        // 调用切换UI显示状态的方法
+        // 切换背包界面的显示状态
         ToggleUI();
     }
 }

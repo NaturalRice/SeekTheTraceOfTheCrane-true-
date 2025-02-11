@@ -43,9 +43,9 @@ public class InventoryManager : MonoBehaviour
     /// </summary>
     private void Init()
     {
-        // 从资源文件中加载所有物品数据并填充字典
+        // 从资源中加载所有物品数据并填充字典
         ItemData[] itemDataArray = Resources.LoadAll<ItemData>("Data");
-        foreach (ItemData data in itemDataArray)
+        foreach(ItemData data in itemDataArray)
         {
             itemDataDict.Add(data.type, data);
         }
@@ -84,8 +84,8 @@ public class InventoryManager : MonoBehaviour
         ItemData item = GetItemData(type);
         if (item == null) return;
 
-        // 遍历背包中的所有槽位，尝试找到可以添加物品的位置
-        foreach (SlotData slotData in backpack.slotList)
+        // 遍历背包中的所有槽位，尝试添加物品
+        foreach(SlotData slotData in backpack.slotList)
         {
             if (slotData.item == item && slotData.CanAddItem())
             {
@@ -94,7 +94,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // 如果没有找到可以添加的槽位，尝试找到空槽位添加物品
+        // 如果没有合适的槽位，尝试找到空槽位添加物品
         foreach (SlotData slotData in backpack.slotList)
         {
             if (slotData.count == 0)

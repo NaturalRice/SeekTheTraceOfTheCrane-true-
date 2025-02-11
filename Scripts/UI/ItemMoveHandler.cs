@@ -30,9 +30,10 @@ public class ItemMoveHandler : MonoBehaviour
         player = GameObject.FindAnyObjectByType<Player>();
     }
 
-    // 更新方法，用于处理物品移动和丢弃的输入逻辑
+    // 更新方法，用于处理物品移动、丢弃等逻辑
     private void Update()
     {
+        // 更新物品图标位置
         if (icon.enabled)
         {
             Vector2 position;
@@ -43,6 +44,7 @@ public class ItemMoveHandler : MonoBehaviour
             icon.GetComponent<RectTransform>().anchoredPosition = position;
         }
 
+        // 鼠标左键点击事件处理
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject() == false)
@@ -51,6 +53,7 @@ public class ItemMoveHandler : MonoBehaviour
             }
         }
 
+        // 控制键按下和释放事件处理
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             isCtrlDown = true;
@@ -59,13 +62,15 @@ public class ItemMoveHandler : MonoBehaviour
         {
             isCtrlDown = false;
         }
+
+        // 鼠标右键点击事件处理
         if (Input.GetMouseButtonDown(1))
         {
             ClearHandForced();
         }
     }
 
-    // 处理槽位点击事件的方法
+    // 槽位点击事件处理方法
     public void OnSlotClick(SlotUI slotui)
     {
         // 判断手上是否为空
@@ -74,23 +79,21 @@ public class ItemMoveHandler : MonoBehaviour
             // 手上不为空时的逻辑
             if (slotui.GetData().IsEmpty())
             {
-                // 移动到空槽位
                 MoveToEmptySlot(selectedSlotData, slotui.GetData());
             }
             else
             {
-                // 移动到非空槽位
+                // 手上不为空且点击的槽位也不为空时的逻辑
                 if (selectedSlotData == slotui.GetData()) return;
                 else
                 {
+                    // 类型一致和类型不一致的逻辑
                     if (selectedSlotData.item == slotui.GetData().item)
                     {
-                        // 同类型物品的移动逻辑
                         MoveToNotEmptySlot(selectedSlotData, slotui.GetData());
                     }
                     else
                     {
-                        // 不同类型物品的交换逻辑
                         SwitchData(selectedSlotData, slotui.GetData());
                     }
                 }
@@ -110,6 +113,7 @@ public class ItemMoveHandler : MonoBehaviour
     {
         icon.enabled = false;
     }
+
     // 显示物品图标的方法
     void ShowIcon(Sprite sprite)
     {
@@ -126,6 +130,7 @@ public class ItemMoveHandler : MonoBehaviour
             selectedSlotData = null;
         }
     }
+
     // 强制清空手上的物品的方法
     void ClearHandForced()
     {
@@ -153,6 +158,7 @@ public class ItemMoveHandler : MonoBehaviour
             ClearHand();
         }
     }
+
     // 移动物品到空槽位的方法
     private void MoveToEmptySlot(SlotData fromData, SlotData toData)
     {
@@ -168,6 +174,7 @@ public class ItemMoveHandler : MonoBehaviour
         }
         ClearHand();
     }
+
     // 移动物品到非空槽位的方法
     private void MoveToNotEmptySlot(SlotData fromData, SlotData toData)
     {
@@ -195,6 +202,7 @@ public class ItemMoveHandler : MonoBehaviour
         }
         ClearHand();
     }
+
     // 交换两个槽位数据的方法
     private void SwitchData(SlotData data1, SlotData data2)
     {

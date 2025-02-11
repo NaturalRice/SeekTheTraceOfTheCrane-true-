@@ -3,31 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// 表示工具栏槽的UI逻辑，继承自SlotUI类
+/// <summary>
+/// 表示工具栏槽位的UI元素，继承自SlotUI类。
+/// 该类负责管理工具栏槽位在高亮和取消高亮时的视觉效果。
+/// </summary>
 public class ToolbarSlotUI : SlotUI
 {
-    /// 用于表示槽未高亮时的Sprite
+    /// <summary>
+    /// 用于显示槽位处于高亮状态时的Sprite。
+    /// </summary>
     public Sprite slotLight;
-    
-    /// 用于表示槽高亮时的Sprite
+
+    /// <summary>
+    /// 用于显示槽位处于非高亮状态时的Sprite。
+    /// </summary>
     public Sprite slotDark;
-    
-    /// 引用槽的Image组件，用于更改其外观
+
+    /// <summary>
+    /// 引用当前UI元素的Image组件，用于更改其外观。
+    /// </summary>
     private Image image;
-    
-    /// 在对象创建时初始化Image组件引用
+
+    /// <summary>
+    /// 在对象创建时初始化必要的组件。
+    /// </summary>
     private void Awake()
     {
         image = GetComponent<Image>();
     }
-    
-    /// 将槽的外观更改为高亮状
+
+    /// <summary>
+    /// 将槽位的外观更改为高亮状态。
+    /// </summary>
     public void Highlight()
     {
         image.sprite = slotDark;
     }
 
-    /// 将槽的外观更改为未高亮状态
+    /// <summary>
+    /// 将槽位的外观更改为非高亮状态。
+    /// </summary>
     public void UnHighlight()
     {
         image.sprite = slotLight;

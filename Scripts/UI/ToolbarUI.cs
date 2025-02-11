@@ -8,7 +8,7 @@ using UnityEngine;
 public class ToolbarUI : MonoBehaviour
 {
     /// <summary>
-    /// 工具栏槽位的 UI 列表
+    /// 工具栏槽位 UI 列表
     /// </summary>
     public List<ToolbarSlotUI> slotuiList;
 
@@ -54,7 +54,7 @@ public class ToolbarUI : MonoBehaviour
         // 获取所有子对象中类型为 ToolbarSlotUI 的组件
         ToolbarSlotUI[] slotuiArray = transform.GetComponentsInChildren<ToolbarSlotUI>();
 
-        // 遍历所有找到的 ToolbarSlotUI 组件并将其添加到列表中
+        // 遍历获取到的槽位 UI 数组并将其添加到列表中
         foreach (ToolbarSlotUI slotUI in slotuiArray)
         {
             slotuiList[slotUI.index] = slotUI;
@@ -69,7 +69,7 @@ public class ToolbarUI : MonoBehaviour
     /// </summary>
     public void UpdateUI()
     {
-        // 从 InventoryManager 中获取工具栏数据的槽位列表
+        // 从工具栏数据中获取槽位数据列表
         List<SlotData> slotdataList = InventoryManager.Instance.toolbarData.slotList;
 
         // 遍历槽位数据列表并更新对应的 UI
@@ -84,22 +84,22 @@ public class ToolbarUI : MonoBehaviour
     /// </summary>
     void ToolbarSelectControl()
     {
-        // 遍历数字键 1-9 的键码
+        // 遍历数字键 1-9 对应的键码
         for (int i = (int)KeyCode.Alpha1; i <= (int)KeyCode.Alpha9; i++)
         {
-            // 检查当前数字键是否被按下
+            // 检查对应数字键是否被按下
             if (Input.GetKeyDown((KeyCode)i))
             {
-                // 如果已有槽位被选中，则取消高亮
+                // 如果有选中的槽位 UI，则取消其高亮状态
                 if (selectedSlotUI != null)
                 {
                     selectedSlotUI.UnHighlight();
                 }
-                // 计算按下数字键的索引
+                // 计算按下的数字键对应的索引
                 int index = i - (int)KeyCode.Alpha1;
                 // 更新选中的槽位 UI
                 selectedSlotUI = slotuiList[index];
-                // 高亮新选中的槽位
+                // 高亮新选中的槽位 UI
                 selectedSlotUI.Highlight();
             }
         }

@@ -42,26 +42,26 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        
+
         // 玩家输入监听
         float horizontal = Input.GetAxisRaw("Horizontal");        // 获取玩家水平轴向输入值
         float vertical = Input.GetAxisRaw("Vertical");        // 获取玩家垂直轴向输入值
-        move = new Vector2(horizontal,vertical);
+        move = new Vector2(horizontal, vertical);
         //animator.SetFloat("MoveValue",0);
         // 当前玩家输入的某个轴向不为0
-        if (!Mathf.Approximately(move.x,0)|| !Mathf.Approximately(move.y, 0))
+        if (!Mathf.Approximately(move.x, 0) || !Mathf.Approximately(move.y, 0))
         {
-            lookDirection.Set(move.x,move.y);
+            lookDirection.Set(move.x, move.y);
             //lookDirection = move;
             lookDirection.Normalize();
             //animator.SetFloat("MoveValue", 1);
         }
         // 动画的控制
-        animator.SetFloat("Look X",lookDirection.x);
-        animator.SetFloat("Look Y",lookDirection.y);
+        animator.SetFloat("Look X", lookDirection.x);
+        animator.SetFloat("Look Y", lookDirection.y);
         moveScale = move.magnitude;
         // 根据玩家是否按住左Shift键来调整移动速度和比例
-        if (move.magnitude>0)
+        if (move.magnitude > 0)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -75,13 +75,13 @@ public class Player : MonoBehaviour
             }
         }
         animator.SetFloat("MoveValue", moveScale);
-        
+
         // 检测是否与NPC对话
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Talk();
         }
-        
+
         // 工具栏UI
         if (toolbarUI.GetSelectedSlotUI() != null
             && toolbarUI.GetSelectedSlotUI().GetData().item.type == ItemType.Hoe
@@ -89,11 +89,29 @@ public class Player : MonoBehaviour
         {
 
             PlantManager.Instance.HoeGround(transform.position);
-            animator.SetTrigger("hoe");
+            //animator.SetTrigger("hoe");
         }
-
-
-
+        /*if (toolbarUI != null)
+        {
+            ToolbarSlotUI selectedSlotUI = toolbarUI.GetSelectedSlotUI();
+            if (selectedSlotUI != null && selectedSlotUI.GetData() != null)
+            {
+                if (selectedSlotUI.GetData().item.type == ItemType.Hoe && Input.GetKeyDown(KeyCode.R))
+                {
+                    Debug.Log("Hoe key pressed and Hoe is selected. Calling HoeGround.");
+                    PlantManager.Instance.HoeGround(transform.position);
+                    animator.SetTrigger("hoe");
+                }
+            }
+            else
+            {
+                Debug.Log("Selected SlotUI or its data is null.");
+            }
+        }
+        else
+        {
+            Debug.Log("toolbarUI is null.");
+        }*/
     }
 
     private void FixedUpdate()

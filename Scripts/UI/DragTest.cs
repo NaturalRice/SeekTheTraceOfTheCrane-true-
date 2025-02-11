@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 用于处理与拖拽和放置游戏对象相关的事件的类。
+/// 用于处理与拖拽和放置游戏对象相关的事件。
 /// </summary>
 public class DragTest : MonoBehaviour
 {
     /// <summary>
     /// 当拖拽操作开始时调用。
-    /// 参数: gameObject - 被拖拽的游戏对象。
+    /// 参数: gameObject - 正在被拖拽的游戏对象。
     /// </summary>
     public void BeginDrag(GameObject gameObject)
     {
@@ -17,8 +17,8 @@ public class DragTest : MonoBehaviour
     }
 
     /// <summary>
-    /// 在拖拽操作过程中调用。
-    /// 参数: gameObject - 被拖拽的游戏对象。
+    /// 在拖拽过程中持续调用。
+    /// 参数: gameObject - 正在被拖拽的游戏对象。
     /// </summary>
     public void OnDrag(GameObject gameObject)
     {
@@ -27,7 +27,7 @@ public class DragTest : MonoBehaviour
 
     /// <summary>
     /// 当拖拽操作结束时调用。
-    /// 参数: gameObject - 被拖拽的游戏对象。
+    /// 参数: gameObject - 正在被拖拽的游戏对象。
     /// </summary>
     public void EndDrag(GameObject gameObject)
     {
