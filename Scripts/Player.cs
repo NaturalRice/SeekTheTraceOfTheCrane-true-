@@ -83,20 +83,20 @@ public class Player : MonoBehaviour
         }
 
         // 工具栏UI
-        if (toolbarUI.GetSelectedSlotUI() != null
+        /*if (toolbarUI.GetSelectedSlotUI() != null
             && toolbarUI.GetSelectedSlotUI().GetData().item.type == ItemType.Hoe
             && Input.GetKeyDown(KeyCode.Space))
         {
 
             PlantManager.Instance.HoeGround(transform.position);
             //animator.SetTrigger("hoe");
-        }
-        /*if (toolbarUI != null)
+        }*/
+        if (toolbarUI != null)
         {
             ToolbarSlotUI selectedSlotUI = toolbarUI.GetSelectedSlotUI();
             if (selectedSlotUI != null && selectedSlotUI.GetData() != null)
             {
-                if (selectedSlotUI.GetData().item.type == ItemType.Hoe && Input.GetKeyDown(KeyCode.R))
+                if (selectedSlotUI.GetData().item.type == ItemType.Hoe && Input.GetKeyDown(KeyCode.Space))
                 {
                     Debug.Log("Hoe key pressed and Hoe is selected. Calling HoeGround.");
                     PlantManager.Instance.HoeGround(transform.position);
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("toolbarUI is null.");
-        }*/
+        }
     }
 
     private void FixedUpdate()
