@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     //Monster属性
     public int monsterCurrentHP;//怪物当前血量
     public int dialogInfoIndex;
-    public bool canControlLuna;
+    public bool canControlLuna;//玩家是否可以移动
+    public bool canWalkingNPC;//NPC是否可以活动
     public bool hasPetTheDog;
     public int candleNum;
     public int killNum;

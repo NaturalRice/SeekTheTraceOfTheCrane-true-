@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     // 控制角色物理行为的Rigidbody2D组件
@@ -83,15 +84,15 @@ public class Player : MonoBehaviour
         }
 
         // 工具栏UI
-        /*if (toolbarUI.GetSelectedSlotUI() != null
+        if (toolbarUI.GetSelectedSlotUI() != null
             && toolbarUI.GetSelectedSlotUI().GetData().item.type == ItemType.Hoe
             && Input.GetKeyDown(KeyCode.Space))
         {
 
             PlantManager.Instance.HoeGround(transform.position);
             //animator.SetTrigger("hoe");
-        }*/
-        if (toolbarUI != null)
+        }
+        /*if (toolbarUI != null)
         {
             ToolbarSlotUI selectedSlotUI = toolbarUI.GetSelectedSlotUI();
             if (selectedSlotUI != null && selectedSlotUI.GetData() != null)
@@ -111,7 +112,7 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("toolbarUI is null.");
-        }
+        }*/
     }
 
     private void FixedUpdate()
@@ -156,6 +157,7 @@ public class Player : MonoBehaviour
             if (collider.name == "程慕清")
             {
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "程慕清"; // 设置npcName
                 npcDialog.DisplayDialog();
@@ -163,6 +165,7 @@ public class Player : MonoBehaviour
             else if (collider.name == "参观者1")
             {
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "参观者1"; // 设置npcName
                 npcDialog.DisplayDialog();
@@ -170,6 +173,7 @@ public class Player : MonoBehaviour
             else if (collider.name == "参观者2")
             {
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "参观者2"; // 设置npcName
                 npcDialog.DisplayDialog();
@@ -177,6 +181,7 @@ public class Player : MonoBehaviour
             else if (collider.name == "参观者3")
             {
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "参观者3"; // 设置npcName
                 npcDialog.DisplayDialog();
@@ -184,6 +189,7 @@ public class Player : MonoBehaviour
             else if (collider.name == "参观者4")
             {
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "参观者4"; // 设置npcName
                 npcDialog.DisplayDialog();
@@ -191,6 +197,7 @@ public class Player : MonoBehaviour
             else if (collider.name == "程老")
             {
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 NPCDialog npcDialog = collider.GetComponent<NPCDialog>();
                 npcDialog.npcName = "程老"; // 设置npcName
                 npcDialog.DisplayDialog();
@@ -201,6 +208,7 @@ public class Player : MonoBehaviour
             {
                 PetTheDog();
                 GameManager.Instance.canControlLuna = false;
+                GameManager.Instance.canWalkingNPC = false;
                 collider.GetComponent<Dog>().BeHappy();
             }
         }

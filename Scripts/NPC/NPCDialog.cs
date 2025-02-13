@@ -7,14 +7,12 @@ using Random = UnityEngine.Random;
 using OpenAI;
 using OpenAI.Chat;
 
-//*****************************************
-//创建人： Trigger 
-//功能说明：NPC談話
-//***************************************** 
 public class NPCDialog : MonoBehaviour
 {
     // 用于控制动画的Animator组件
     public Animator animator;
+    
+    public NPCMovement npcMovement; // 引用NPC的移动脚本
     
     // UI元素
     [SerializeField] private DiscussionBubble bubblePrefab;
@@ -140,6 +138,7 @@ public class NPCDialog : MonoBehaviour
         // 确保npcName在DisplayDialog方法调用时已经被正确赋值
         //Debug.Log("NPC Name in DisplayDialog: " + npcName);
         UIManager.Instance.ShowDialog(npcName);
-        animator.SetTrigger("Talk");
+        //设置好NPC对话动画后再启用
+        //animator.SetTrigger("Talk");
     }
 }

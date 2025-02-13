@@ -70,6 +70,8 @@ public class UIManager : MonoBehaviour
             TalkPanelGo6.SetActive(false);
             // 允许玩家继续控制角色
             GameManager.Instance.canControlLuna = true;
+            //允许NPC活动
+            GameManager.Instance.canWalkingNPC = true;
         }
     }
 
@@ -79,17 +81,29 @@ public class UIManager : MonoBehaviour
     /// <param name="name"></param>
     public void ShowDialog(string name)
     {
-        if(name == "程慕清")
-            TalkPanelGo1.SetActive(true);
-        else if(name == "参观者1")
-            TalkPanelGo2.SetActive(true);
-        else if(name == "参观者2")
-            TalkPanelGo3.SetActive(true);
-        else if(name == "参观者3")
-            TalkPanelGo4.SetActive(true);
-        else if(name == "参观者4")
-            TalkPanelGo5.SetActive(true);
-        else if(name == "程老")
-            TalkPanelGo6.SetActive(true);
+        switch (name)
+        {
+            case "程慕清":
+                TalkPanelGo1.SetActive(true);
+                break;
+            case "参观者1":
+                TalkPanelGo2.SetActive(true);
+                break;
+            case "参观者2":
+                TalkPanelGo3.SetActive(true);
+                break;
+            case "参观者3":
+                TalkPanelGo4.SetActive(true);
+                break;
+            case "参观者4":
+                TalkPanelGo5.SetActive(true);
+                break;
+            case "程老":
+                TalkPanelGo6.SetActive(true);
+                break;
+            default:
+                TalkPanelGo0.SetActive(true);
+                break;
+        }
     }
 }
