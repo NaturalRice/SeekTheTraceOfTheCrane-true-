@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
     // 控制角色物理行为的Rigidbody2D组件
     private Rigidbody2D rigidbody2d;
     // 角色移动速度
-    [SerializeField]
-    private float moveSpeed;
+    [SerializeField] private float moveSpeed;
     // 角色动画控制器
     private Animator animator;
     // 角色面向的方向
