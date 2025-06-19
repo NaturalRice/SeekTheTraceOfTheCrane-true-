@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         lunaHP =100;
         lunaMP =100;
         monsterCurrentHP = 50;
+        canControlLuna = true; // 确保玩家在游戏开始时可以控制
     }
 
     private void Update()

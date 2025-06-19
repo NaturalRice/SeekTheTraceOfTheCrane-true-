@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         originalSize = hpMaskImage.rectTransform.rect.width;
         SetHPValue(1);
+        TalkPanelGo0.SetActive(false); // 确保玩家面板在游戏开始时没有被激活
     }
 
     /// <summary>

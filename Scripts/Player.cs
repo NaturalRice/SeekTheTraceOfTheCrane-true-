@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
         // 获取角色的Animator组件
         animator = GetComponentInChildren<Animator>();
+        // 确保玩家在游戏开始时没有进入对话状态
+        GameManager.Instance.canControlLuna = true;
     }
 
     // Update is called once per frame
